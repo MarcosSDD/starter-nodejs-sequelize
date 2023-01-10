@@ -1,5 +1,7 @@
-const express = require('express');
+const express = require('express')
+const { users } = require('./routes')
+const app = express()
 
-const app = express();
+app.use("/api/user",users)
 
-module.exports = app;
+module.exports = app
