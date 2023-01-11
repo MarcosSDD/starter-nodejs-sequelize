@@ -1,9 +1,8 @@
 const express = require('express')
-
+const userController = require('../controllers/users')
 const users = express.Router()
 
-users.get("/", (require,response)=>{
-    response.send("Hola")
-})
+users.get('/profile', userController.profile)
+users.get('/login', userController.login)
 
 module.exports = users
