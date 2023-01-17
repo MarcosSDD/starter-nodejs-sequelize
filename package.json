@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|md|)\"",
     "dev": "nodemon",
-    "start": "node src/server.js"
+    "start": "node"
   },
   "keywords": [],
   "author": "",
