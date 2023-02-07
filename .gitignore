@@ -14,6 +14,7 @@ dist/
 *.py[cod]
 
 # Log files
+/log
 *.log
 
 # Package files
@@ -52,3 +53,5 @@ Thumbs.db
 venv/
 .venv
 .env
+
+

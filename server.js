@@ -1,16 +1,17 @@
-const express = require('express')
-const app = require('./src/app')
+const { app, logger } = require('./src/app')
 
-const portServer = 3000
-
-app.use(express.json())
+const portServer = process.env.APP_PORT || 3000
 
 // Default message
-app.get('*', (request, response) => response.status(200).json({
-	message: "Wellcome to Rest Web Service",
-}));
+app.get('*', (request, response) =>
+  response.status(200).json({
+    message: 'Welcome to Rest Web Service',
+  })
+)
 
 //Run Server
-app.listen(portServer, () => {
-  console.log(`Server working in port ${portServer}`)
+const server = app.listen(portServer, () => {
+  logger.info(`Server working in port ${portServer}`)
 })
+
+module.exports = server
