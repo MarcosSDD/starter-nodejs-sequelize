@@ -2,9 +2,8 @@ const { userController } = require('../../controllers')
 const User = require('../../models').User
 
 afterEach(() => {
-  jest.resetAllMocks();
+  jest.resetAllMocks()
 })
-
 
 describe('# Service Endpoints', () => {
   describe('# User Endpoints', () => {

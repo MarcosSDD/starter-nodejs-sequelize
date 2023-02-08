@@ -4,10 +4,9 @@ const logger = require('../../logger')
 module.exports = {
   async register(request, response) {
     /*#swagger.tags = ['User'];
-      #swagger.description = 'Create a User'
-      #swagger.summary = "Create user"
+      #swagger.description = 'Create a User';
+      #swagger.summary = "Create User";
       #swagger.requestBody = {
-        description = 'Create a User',
         required: true,
         content: {
             "application/json": {
@@ -16,17 +15,18 @@ module.exports = {
         }
       }
     */
+
     const { name, surname, email, password } = request.body
-    
+
     // Validate User Exists
     const userExists = await User.findOne({
       where: { email },
     })
     if (userExists) {
-      const error = new Error('Usuario ya registrado')
+      const error = new Error('User already exists')
       logger.error(error)
       response.status(400)
-      return response.json({ msg: error.message })
+      return response.json({ "error": error.message })
     }
     try {
       const saveUser = await User.create({
@@ -59,13 +59,14 @@ module.exports = {
     } catch (error) {
       logger.error(error.errors)
       /* #swagger.responses[500] = {          
-              schema: { "msg": "Internal Error" },
+              schema: { "error": "Internal Error" },
           },
       */
       response.status(500)
-      return response.json({ msg: error.message })
+      return response.json({ "error": error.message })
     }
   },
+
   login(request, response) {
     /*#swagger.tags = ['User'];
 		  #swagger.description = 'Login User'

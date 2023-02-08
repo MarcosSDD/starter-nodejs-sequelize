@@ -9,7 +9,7 @@ dotenv.config()
 
 const options = {
   customCss: '.swagger-ui .topbar { display: none }',
-};
+}
 
 const app = express()
 

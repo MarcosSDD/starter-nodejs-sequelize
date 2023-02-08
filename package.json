@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --silent",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|md|)\"",
-    "dev": "node swagger.js && nodemon",
-    "doc":"node swagger.js",
+    "dev": "nodemon",
+    "doc": "node swagger.js",
     "start": "node"
   },
   "keywords": [],
@@ -28,6 +28,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-validator": "^6.14.3",
     "mysql2": "^2.3.3",
     "sequelize": "^6.28.0",
     "swagger-autogen": "^2.23.0",
