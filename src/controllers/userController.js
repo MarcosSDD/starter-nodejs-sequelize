@@ -98,7 +98,6 @@ module.exports = {
 
   async profile(req, res) {
     const { id } = req.params;
-    console.log( id )
     // Validate User Exists
     const userExists = await User.scope("sendDataUser").findOne({
       where: { id },
@@ -115,43 +114,60 @@ module.exports = {
   async update(req,res){
     const { id } = req.params;
     const { email } = req.body;
-
-    const userToUp = await User.scope("sendDataUser").findByPk(id)
-    if (!userToUp){
-        const error = new Error("User not found");
-        logger.error(error)
-        res.status(400)
-        return res.json({ 'error': error.message });
-    }
-
-    if (userToUp.email !== email){
-        const emailExists = await User.findOne({ where :{ email } })
-        if (emailExists){
-            const error = new Error("Address already exists");
-            logger.error(error)
-            res.status(400)
-            return res.json({ 'error': error.message });
-        }
-    }
-
     try {
-        userToUp.name = req.body.name;
-        userToUp.surname = req.body.surname;
-        userToUp.birthday = req.body.birthday;
-        userToUp.gender = req.body.gender;
-        userToUp.email = req.body.email;
-        userToUp.username = req.body.username;
+      const userToUp = await User.scope("sendDataUser").findByPk(id)
+      if (!userToUp){
+          const error = new Error("User not found");
+          logger.error(error)
+          res.status(400)
+          return res.json({ 'error': error.message });
+      }
 
-        const userUp = await userToUp.save();
-        res.status(200).json(userUp); 
+      if (userToUp.email !== email){
+          const emailExists = await User.findOne({ where :{ email } })
+          if (emailExists){
+              const error = new Error("Address already exists");
+              logger.error(error)
+              res.status(400)
+              return res.json({ 'error': error.message });
+          }
+      }
+
+      userToUp.name = req.body.name;
+      userToUp.surname = req.body.surname;
+      userToUp.birthday = req.body.birthday;
+      userToUp.gender = req.body.gender;
+      userToUp.email = req.body.email;
+      userToUp.username = req.body.username;
+
+      const userUp = await userToUp.save();
+      res.status(200).json(userUp); 
 
     } catch (error) {
       logger.error(error)
     }
   },
   
-  async delete(req,res){
+  async delete(req,res, next){
+    try {
+      const { id } = req.params;
+      const userToDel = await User.findByPk(id);
+      if (!userToDel){
+        const error = new Error('User not found')
+        logger.error(error)
+        res.status(400)
+        return res.json({ "error": error.message })
+      }
     
+      userToDel.destroy();
+      res.status(200)
+      return res.json({ msg: "User Deleted" });
+    } catch (error) {
+      logger.error(error);
+      res.status(500)
+      return res.json({ 'error':error });
+    }
+
   },
   
   async allUsers(req,res){
