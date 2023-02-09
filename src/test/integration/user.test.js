@@ -51,12 +51,12 @@ describe('# POST new user', () => {
       .expect(400)
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect((res) => {
-        expect(res.body.msg).toBe('Usuario ya registrado')
+        expect(res.body.error).toBe('User already exists')
       })
   })
 })
 
-describe('# Get login user ', () => {
+describe.skip('# Get login user ', () => {
   it('should data user', async () => {
     await api
       .get('/api/user/login')

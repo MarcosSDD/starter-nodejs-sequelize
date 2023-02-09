@@ -19,6 +19,13 @@ app.use('/api/', router)
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile, options))
 
+// Default message
+app.get('*', (request, response) =>
+  response.status(200).json({
+    message: 'Welcome to Rest Web Service',
+  })
+)
+
 module.exports = {
   app,
   logger,

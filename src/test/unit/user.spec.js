@@ -64,7 +64,7 @@ describe('# Service Endpoints', () => {
 
         expect(res.json.mock.calls).toHaveLength(1)
 
-        expect(res.json.mock.calls[0][0].msg).toBe('Usuario ya registrado')
+        expect(res.json.mock.calls[0][0].error).toBe('User already exists')
       })
     })
   })

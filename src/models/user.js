@@ -1,5 +1,6 @@
 'use strict'
 const { Model } = require('sequelize')
+const bcrypt = require('bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    validPassword(password) {
+      return bcrypt.compareSync(password, this.password);
+    }
+
   }
   User.init(
     {
@@ -66,9 +72,23 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      hooks: {
+        beforeCreate: async (user) => {
+          const salt =  await bcrypt.genSalt(10);
+          user.password = await bcrypt.hashSync( user.password, salt );
+        },
+      },
+      scopes: {
+        sendDataUser: {
+            attributes: {
+                exclude : ['updatedAt','createdAt','password','token','confirmed']
+            }
+        }
+      },
       sequelize,
       modelName: 'User',
     }
   )
+
   return User
 }
