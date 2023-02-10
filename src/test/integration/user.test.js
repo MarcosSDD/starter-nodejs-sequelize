@@ -29,7 +29,11 @@ beforeEach(async () => {
   await User.create(defaultUser)
 })
 
-afterEach(() => {
+afterEach(async () => {
+  await User.destroy({
+    where: {},
+    truncate: true,
+  })
   server.close()
 })
 
@@ -44,7 +48,7 @@ describe('# POST new user', () => {
         expect(res.body).toHaveProperty('id')
       })
   })
-  it('should create a user with error "User exist" ', async () => {
+  it('should not create a user by "User exist" error', async () => {
     await api
       .post('/api/user/')
       .send(defaultUser)
@@ -56,11 +60,50 @@ describe('# POST new user', () => {
   })
 })
 
-describe.skip('# Get login user ', () => {
-  it('should data user', async () => {
+describe('# Get login user ', () => {
+  it('should must provide login user data', async () => {
+    const loginUser = {
+      email: 'user@gmail.com',
+      password: '123456Secret',
+    }
     await api
-      .get('/api/user/login')
+      .post('/api/user/login')
+      .send(loginUser)
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect((res) => {
+        expect(res.body).toHaveProperty('id')
+      })
   })
+
+  it('should must provide User not found', async () => {
+    const failUser = {
+      email: 'failUser@gmail.com',
+      password: '123456Secret',
+    }
+    await api
+    .post('/api/user/login')
+    .send(failUser)
+    .expect(404)
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect((res) => {
+      expect(res.body.error).toBe('User not found')
+    })
+  })
+
+  it('should must provide password does not match', async () => {
+    const failUser = {
+      email: 'user@gmail.com',
+      password: '123456FailSecret',
+    }
+    await api
+    .post('/api/user/login')
+    .send(failUser)
+    .expect(403)
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect((res) => {
+      expect(res.body.error).toBe('Password does not match')
+    })
+  })
+
 })

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --verbose --silent",
+    "test": "jest --verbose --silent --detectOpenHandles",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|md|)\"",
     "dev": "nodemon",

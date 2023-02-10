@@ -35,7 +35,7 @@ module.exports = {
         email,
         password,
       })
-
+      //TODO: confirmation by email
       /* #swagger.responses[201] = {
           content: {
             "application/json": {
@@ -55,11 +55,11 @@ module.exports = {
         success: true,
       })
     } catch (error) {
-      logger.error(error.errors)
       /* #swagger.responses[500] = {          
-              schema: { "error": "Internal Error" },
-          },
+        schema: { "error": "Internal Error" },
+      },
       */
+     logger.error(error.errors)
       res.status(500)
       return res.json({ "error": error.message })
     }
@@ -70,33 +70,37 @@ module.exports = {
     /*#swagger.tags = ['User'];
 		  #swagger.description = 'Login User'
       #swagger.summary = "Login user"
-     */
-      const { email, password } = req.body;
-    
-      // Validate User Exists .scope("sendDataUser")
-      const userLogin = await User.findOne({ where :{ email } });
-      if (!userLogin){
-          const error = new Error("User not found");
-          response.status(404)
-          return response.json({ 'error': error.message });
-      }
+    */
+    const { email, password } = req.body;
   
-      // comprobar passwd
-      if( await userLogin.validPassword(password) ){
-          res.status(200)
-          res.json({
-              id:userLogin.id,
-              name: userLogin.name,
-              surname: userLogin.surname,
-          })
-      } else {
-          const error = new Error("Password does not match");
-          res.status(403)
-          return res.json({ 'error': error.message });
-      }
+    // Validate User Exists .scope("sendDataUser")
+    const userLogin = await User.findOne({ where :{ email } });
+    if (!userLogin){
+        const error = new Error("User not found");
+        res.status(404)
+        return res.json({ 'error': error.message });
+    }
+
+    // comprobar passwd
+    if( await userLogin.validPassword(password) ){
+        res.status(200)
+        res.json({
+            id:userLogin.id,
+            name: userLogin.name,
+            surname: userLogin.surname,
+        })
+    } else {
+        const error = new Error("Password does not match");
+        res.status(403)
+        return res.json({ 'error': error.message });
+    }
   },
 
   async profile(req, res) {
+    /*#swagger.tags = ['User'];
+		  #swagger.description = 'Profile User'
+      #swagger.summary = "Profile user"
+    */
     const { id } = req.params;
     // Validate User Exists
     const userExists = await User.scope("sendDataUser").findOne({
@@ -112,6 +116,10 @@ module.exports = {
   },
   
   async update(req,res){
+    /*#swagger.tags = ['User'];
+		  #swagger.description = 'Update User'
+      #swagger.summary = "Update user"
+    */
     const { id } = req.params;
     const { email } = req.body;
     try {
@@ -149,6 +157,10 @@ module.exports = {
   },
   
   async delete(req,res, next){
+    /*#swagger.tags = ['User'];
+		  #swagger.description = 'Delete User'
+      #swagger.summary = "Delete user"
+    */
     try {
       const { id } = req.params;
       const userToDel = await User.findByPk(id);
@@ -171,6 +183,18 @@ module.exports = {
   },
   
   async allUsers(req,res){
-
+    /*#swagger.tags = ['User'];
+		  #swagger.description = 'Get All Users'
+      #swagger.summary = "Get All users"
+    */
+    try {
+      //TODO: pagination 
+      const users = await User.scope("sendDataUser").findAll();
+      res.status(200)
+      return res.json(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: Errors.SERVER_ERROR });
+    }
   },
 }
