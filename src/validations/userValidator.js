@@ -1,8 +1,8 @@
 const { check, validationResult } = require('express-validator')
 const logger = require('../../logger')
 
-module.exports = { 
-  async validUser (request, response, next) {
+module.exports = {
+  async validUser(request, response, next) {
     await check('name')
       .notEmpty()
       .trim()
@@ -32,4 +32,4 @@ module.exports = {
     }
     return next()
   },
-} 
+}

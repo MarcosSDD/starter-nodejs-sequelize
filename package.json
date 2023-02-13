@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --verbose --silent --detectOpenHandles",
+    "test:cover": "jest --coverage",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|md|)\"",
     "dev": "nodemon",

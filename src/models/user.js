@@ -8,14 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-    }
+    //static associate(models) {
+    // define association here
+    //}
 
     validPassword(password) {
-      return bcrypt.compareSync(password, this.password);
+      return bcrypt.compareSync(password, this.password)
     }
-
   }
   User.init(
     {
@@ -74,16 +73,22 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: async (user) => {
-          const salt =  await bcrypt.genSalt(10);
-          user.password = await bcrypt.hashSync( user.password, salt );
+          const salt = await bcrypt.genSalt(10)
+          user.password = await bcrypt.hashSync(user.password, salt)
         },
       },
       scopes: {
         sendDataUser: {
-            attributes: {
-                exclude : ['updatedAt','createdAt','password','token','confirmed']
-            }
-        }
+          attributes: {
+            exclude: [
+              'updatedAt',
+              'createdAt',
+              'password',
+              'token',
+              'confirmed',
+            ],
+          },
+        },
       },
       sequelize,
       modelName: 'User',
