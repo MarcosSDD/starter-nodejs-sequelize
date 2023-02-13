@@ -6,11 +6,17 @@
   "scripts": {
     "test": "jest --verbose --silent --detectOpenHandles",
     "test:cover": "jest --coverage",
+    "db:migrate":"npx sequelize db:create && npx sequelize db:migrate",
+    "db:migrate:undo": "npx sequelize db:migrate:undo",
+    "db:migrate:undo:all": "npx sequelize db:migrate:undo:all",
+    "db:seed:all": "npx sequelize db:seed:all",
+    "db:seed:undo": "npx sequelize db:seed:undo",
+    "db:seed:undo:all": "npx sequelize db:seed:undo:all",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|md|)\"",
-    "dev": "nodemon",
+    "dev": "nodemon server.js",
     "doc": "node swagger.js",
-    "start": "node"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
