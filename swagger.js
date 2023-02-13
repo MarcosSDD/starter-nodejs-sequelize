@@ -40,9 +40,28 @@ const basicInformation = {
       password: '12345678',
     },
     newUser: {
+      id:'xxxxxxxxx',
+      name: 'Jhon',
+      surname: 'Doe',
+      email: "jhon.doe@gg.com",
+      createdAt: "2023-02-13T21:11:43.381Z",
+      updatedAt: "2023-02-13T21:11:43.381Z",
+      success: true
+    },
+    resLoginUser: {
+      id: 'xxxxxxxxx',
       name: 'Jhon',
       surname: 'Doe',
     },
+    loginUser:{
+      email: 'jhon.doe@gg.com',
+      password: '12345678',
+    },
+    mailUser:{
+      email: 'jhon.doe@gg.com',
+    },
+    arrayUsers: [ { $ref: "#/definitions/newUser" } ] ,
+
   },
 }
 swaggerAutogen(outputFile, endpointsFiles, basicInformation)
