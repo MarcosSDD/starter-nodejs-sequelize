@@ -5,8 +5,8 @@ const endpointsFiles = ['./src/routes/index.js']
 const basicInformation = {
   info: {
     version: '1.0.0',
-    title: 'User API - NodeJS - Sequelize',
-    description: 'Web Services Documentation : This is a sample ',
+    title: 'Init Project API - NodeJS - Sequelize',
+    description: 'Web Services Documentation : This is a starter project for quickly building REST APIs in Node.js using Express and Sequelize ORM ',
     termsOfService: 'http://swagger.io/terms/',
     contact: {
       email: 'marcos.saldivia@gmail.com',
