@@ -22,7 +22,6 @@ This is a starter project for quickly building REST APIs in Node.js using Expres
 
 - Instant feedback and reload with Nodemon
 
-- 
 
 ## TODO:
 
@@ -33,11 +32,11 @@ This is a starter project for quickly building REST APIs in Node.js using Expres
 
 ## Environment
 
-Sequelize CLI: 6.5.2
-Sequelize version: 6.3.3
-Node.js version: 16.19.0
-Express version: 4.18.2
-Operating System: Debian Linux 11
+* Sequelize CLI: 6.5.2
+* Sequelize version: 6.3.3
+* Node.js version: 16.19.0
+* Express version: 4.18.2
+* Operating System: Debian Linux 11
 
 ## Getting Started
 
@@ -45,7 +44,6 @@ Operating System: Debian Linux 11
 
 ```console
 git clone https://github.com/
-
 ```
 ### Enter into the directory
 
@@ -94,7 +92,9 @@ npm run db:seed:all
 ```
 ### Run Server Locally
 
+```console
 npm run start
+```
 ### Run Develop Enviroment
 
 ```console
@@ -108,22 +108,18 @@ Create and migrate data base for testing
 npm run db:create:test
 
 npm run db:migrate:test
-
 ```
 Run tests
 
 ```console
 npm run test
-
 ```
-
 ### Lint
 
 ```console
 npm run lint
 
 npm run format
-
 ```
 ### API documentation
 
