@@ -28,7 +28,7 @@ This is a starter project for quickly building REST APIs in Node.js using Expres
 * Process management: advanced production process management using PM2
 * Docker support
 * Compression: gzip compression with compression
-* Authentication and Authorization
+* ~~Authentication and Authorization~~
 
 ## Environment
 
